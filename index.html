@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hatem Al-Ahlasi | حاتم الأحلسي</title>
     <meta name="description" content="أبني الأنظمة التي يديرها الآخرون، وأصمم الرؤية التي يقلدها الجميع. مهندس شبكات، مطور أتمتة، ومصمم رقمي.">
-    <!-- خطوط جوجل الاحترافية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -43,7 +41,6 @@
             position: relative;
         }
 
-        /* خلفية الشبكة الهندسية المتحركة */
         .bg-grid {
             position: fixed;
             inset: 0;
@@ -62,7 +59,6 @@
             100% { background-position: 40px 40px; }
         }
 
-        /* كرات الإضاءة النيون في الخلفية */
         .orb {
             position: fixed;
             border-radius: 50%;
@@ -92,7 +88,6 @@
             100% { transform: translate(-30px, 40px) scale(1.15); }
         }
 
-        /* البطاقة الرئيسية */
         .container {
             width: 100%;
             max-width: 540px;
@@ -115,7 +110,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* شريط الإضاءة العلوي للبطاقة */
         .container::before {
             content: '';
             position: absolute;
@@ -126,7 +120,6 @@
             background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
         }
 
-        /* شارة الحالة المباشرة */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -156,7 +149,6 @@
             50% { opacity: 0.4; transform: scale(1.3); }
         }
 
-        /* الصورة الشخصية والهالة */
         .avatar-wrapper {
             position: relative;
             width: 130px;
@@ -188,7 +180,6 @@
             background-color: #1e293b;
         }
 
-        /* العناوين والنصوص */
         .name-en {
             font-family: 'JetBrains Mono', sans-serif;
             font-size: 13px;
@@ -233,7 +224,6 @@
             padding: 0 10px;
         }
 
-        /* فاصل تقني */
         .divider {
             display: flex;
             align-items: center;
@@ -250,7 +240,6 @@
             background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.25), transparent);
         }
 
-        /* شبكة الروابط الضخمة */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -318,7 +307,12 @@
             display: block;
         }
 
-        /* التذييل */
+        /* جعل زر GitHub يمتد بعرض العمودين ليوازن الشبكة */
+        .link-card.full-width {
+            grid-column: span 2;
+            justify-content: center;
+        }
+
         .footer {
             margin-top: 32px;
             padding-top: 18px;
@@ -326,12 +320,16 @@
             font-size: 12px;
             color: var(--text-muted);
             font-family: 'JetBrains Mono', 'Cairo', sans-serif;
+            text-align: center;
         }
 
-        /* استجابة الشاشات الصغيرة جداً */
         @media (max-width: 440px) {
             .links-grid {
                 grid-template-columns: 1fr;
+            }
+            .link-card.full-width {
+                grid-column: span 1;
+                justify-content: flex-start;
             }
             .container {
                 padding: 30px 20px;
@@ -357,7 +355,6 @@
 
             <div class="avatar-wrapper">
                 <div class="avatar-ring"></div>
-                <!-- استبدل الرابط أدناه برابط صورتك المباشر أو اسم ملف الصورة في المستودع مثل avatar.jpg -->
                 <img src="https://ui-avatars.com/api/?name=Hatem+Al-Ahlasi&background=0f172a&color=38bdf8&size=256&bold=true" alt="Hatem Al-Ahlasi" class="avatar">
             </div>
 
@@ -379,25 +376,16 @@
 
         <div class="links-grid">
             <!-- تيليجرام -->
-            <a href="https://t.me/hatemalahlasi_bot" class="link-card" target="_blank" style="--hover-color: #26A5E4;">
+            <a href="https://t.me/hatemalahlasi" class="link-card" target="_blank" style="--hover-color: #26A5E4;">
                 <div class="icon-box"><i class="fa-brands fa-telegram"></i></div>
                 <div class="link-info">
                     <span class="link-title">تيليجرام</span>
-                    <span class="link-sub">Telegram</span>
-                </div>
-            </a>
-
-            <!-- جيت هب -->
-            <a href="https://github.com/Hatemalahlasi" class="link-card" target="_blank" style="--hover-color: #a855f7;">
-                <div class="icon-box"><i class="fa-brands fa-github"></i></div>
-                <div class="link-info">
-                    <span class="link-title">جيت هب</span>
-                    <span class="link-sub">GitHub</span>
+                    <span class="link-sub">@hatemalahlasi</span>
                 </div>
             </a>
 
             <!-- فيسبوك -->
-            <a href="رابط_فيسبوك" class="link-card" target="_blank" style="--hover-color: #1877F2;">
+            <a href="https://www.facebook.com/share/1GwQNm6TV1/?mibextid=wwXIfr" class="link-card" target="_blank" style="--hover-color: #1877F2;">
                 <div class="icon-box"><i class="fa-brands fa-facebook-f"></i></div>
                 <div class="link-info">
                     <span class="link-title">فيسبوك</span>
@@ -405,48 +393,30 @@
                 </div>
             </a>
 
-            <!-- إنستغرام -->
-            <a href="https://www.instagram.com/hatem.ym?srtk=MTlnbWpmd3AwNW12Mg%3D%3D&utm_source=qr" class="link-card" target="_blank" style="--hover-color: #E4405F;">
-                <div class="icon-box"><i class="fa-brands fa-instagram"></i></div>
-                <div class="link-info">
-                    <span class="link-title">إنستغرام</span>
-                    <span class="link-sub">Instagram</span>
-                </div>
-            </a>
-
-            <!-- يوتيوب -->
-            <a href="رابط_يوتيوب" class="link-card" target="_blank" style="--hover-color: #FF0000;">
-                <div class="icon-box"><i class="fa-brands fa-youtube"></i></div>
-                <div class="link-info">
-                    <span class="link-title">يوتيوب</span>
-                    <span class="link-sub">YouTube</span>
-                </div>
-            </a>
-
-            <!-- إكس (تويتر) -->
-            <a href="رابط_إكس_تويتر" class="link-card" target="_blank" style="--hover-color: #38bdf8;">
-                <div class="icon-box"><i class="fa-brands fa-x-twitter"></i></div>
-                <div class="link-info">
-                    <span class="link-title">منصة إكس</span>
-                    <span class="link-sub">X / Twitter</span>
-                </div>
-            </a>
-
             <!-- تيك توك -->
-            <a href="رابط_تيك_توك" class="link-card" target="_blank" style="--hover-color: #00f2fe;">
+            <a href="https://www.tiktok.com/@hatem.ym" class="link-card" target="_blank" style="--hover-color: #00f2fe;">
                 <div class="icon-box"><i class="fa-brands fa-tiktok"></i></div>
                 <div class="link-info">
                     <span class="link-title">تيك توك</span>
-                    <span class="link-sub">TikTok</span>
+                    <span class="link-sub">@hatem.ym</span>
                 </div>
             </a>
 
             <!-- سناب شات -->
-            <a href="رابط_سناب_شات" class="link-card" target="_blank" style="--hover-color: #FFFC00;">
+            <a href="https://snapchat.com/t/EagwKRp9" class="link-card" target="_blank" style="--hover-color: #FFFC00;">
                 <div class="icon-box"><i class="fa-brands fa-snapchat"></i></div>
                 <div class="link-info">
                     <span class="link-title">سناب شات</span>
                     <span class="link-sub">Snapchat</span>
+                </div>
+            </a>
+
+            <!-- جيت هب -->
+            <a href="https://github.com/Hatemalahlasi" class="link-card full-width" target="_blank" style="--hover-color: #a855f7;">
+                <div class="icon-box"><i class="fa-brands fa-github"></i></div>
+                <div class="link-info">
+                    <span class="link-title">مستودع المشاريع على جيت هب</span>
+                    <span class="link-sub">github.com/Hatemalahlasi</span>
                 </div>
             </a>
         </div>
