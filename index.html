@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>خزنة العائلة السحابية | Family Vault</title>
+    <title>نظام إدارة الحسابات السحابي | Cloud Vault</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -15,17 +15,17 @@
 
     <style>
         :root {
-            --bg-page: #f0f7ff;
+            --bg-page: #f8fafc;
             --bg-card: #ffffff;
-            --primary-blue: #0284c7;
-            --light-blue: #e0f2fe;
+            --primary-blue: #0f172a;
+            --accent-blue: #0284c7;
+            --light-blue: #f1f5f9;
             --hover-blue: #0369a1;
-            --border-color: #bae6fd;
+            --border-color: #e2e8f0;
             --text-dark: #0f172a;
-            --text-muted: #475569;
+            --text-muted: #64748b;
             --danger: #dc2626;
             --danger-bg: #fee2e2;
-            --success: #059669;
             --warning-bg: #fef3c7;
             --warning: #d97706;
         }
@@ -35,15 +35,12 @@
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-page);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(186, 230, 253, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(224, 242, 254, 0.6) 0px, transparent 50%);
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
         }
 
         .container {
@@ -52,77 +49,97 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 14px;
-            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
+            padding: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
         }
 
         @media (min-width: 768px) {
             .container {
-                padding: 28px;
+                padding: 32px;
                 border-radius: 20px;
             }
         }
 
-        .login-box { max-width: 380px; margin: 0 auto; width: 100%; }
+        /* تصميم شاشة تسجيل الدخول الرسمية الجديدة */
+        .login-box {
+            max-width: 380px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px 16px;
+        }
 
         .system-icon {
-            width: 58px;
-            height: 58px;
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            border-radius: 14px;
+            width: 64px;
+            height: 64px;
+            background: #e0f2fe;
+            color: var(--accent-blue);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 14px;
-            font-size: 24px;
+            margin: 0 auto 16px;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
         }
 
-        h2 { text-align: center; font-size: 19px; font-weight: 800; margin-bottom: 4px; }
-        .subtitle { text-align: center; color: var(--text-muted); font-size: 12.5px; margin-bottom: 18px; }
+        .login-box h2 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
 
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 12px; margin-bottom: 4px; font-weight: 700; }
+        .login-box .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 12.5px; margin-bottom: 5px; font-weight: 700; color: var(--text-dark); }
 
         .form-group input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 11px 14px;
             background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 9px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
             color: var(--text-dark);
             font-family: 'Cairo', sans-serif;
-            font-size: 13.5px;
+            font-size: 14px;
+            transition: all 0.2s;
         }
 
         .form-group input:focus {
-            border-color: var(--primary-blue);
+            border-color: var(--accent-blue);
             background: #ffffff;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
         }
 
         .btn {
             width: 100%;
-            padding: 10px 14px;
-            border-radius: 9px;
+            padding: 12px 16px;
+            border-radius: 10px;
             border: none;
             font-family: 'Cairo', sans-serif;
             font-weight: 700;
-            font-size: 13.5px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .btn-primary { background: var(--primary-blue); color: #ffffff; }
+        .btn-primary { background: var(--accent-blue); color: #ffffff; }
         .btn-primary:hover { background: var(--hover-blue); }
 
-        .btn-outline { background: var(--light-blue); color: var(--primary-blue); border: 1px solid var(--border-color); }
-        .btn-outline:hover { background: #bae6fd; }
+        .btn-outline { background: var(--light-blue); color: var(--accent-blue); border: 1px solid var(--border-color); }
+        .btn-outline:hover { background: #e2e8f0; }
 
         .btn-warning { background: var(--warning-bg); color: var(--warning); }
         .btn-warning:hover { background: var(--warning); color: #ffffff; }
@@ -151,7 +168,7 @@
 
         .admin-badge {
             background: var(--light-blue);
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             padding: 3px 10px;
             border-radius: 50px;
             font-size: 11px;
@@ -160,16 +177,16 @@
 
         .panel-card {
             background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 12px;
+            padding: 14px;
             margin-bottom: 14px;
         }
 
         .panel-title {
             font-size: 13.5px;
             font-weight: 800;
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             margin-bottom: 8px;
         }
 
@@ -179,7 +196,7 @@
             .grid-2 { grid-template-columns: 1fr 1fr; }
         }
 
-        .table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid #e2e8f0; -webkit-overflow-scrolling: touch; margin-top: 8px; }
+        .table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border-color); -webkit-overflow-scrolling: touch; margin-top: 8px; }
 
         .data-table {
             width: 100%;
@@ -207,14 +224,14 @@
             align-items: center;
             gap: 6px;
             background: #f1f5f9;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border-color);
             padding: 2px 6px;
             border-radius: 5px;
         }
 
         .pass-badge {
             font-family: 'JetBrains Mono', monospace;
-            color: #0369a1;
+            color: var(--accent-blue);
             font-weight: 700;
             direction: ltr;
             font-size: 12px;
@@ -223,12 +240,11 @@
         .btn-copy-pass {
             background: transparent;
             border: none;
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             cursor: pointer;
             font-size: 12px;
         }
 
-        /* تصميم القائمة المنسدلة المباشرة داخل الصفحة للمشرف */
         .member-block {
             background: #ffffff;
             border: 1.5px solid var(--border-color);
@@ -251,11 +267,11 @@
         }
 
         .member-header:hover {
-            background: #f0f7ff;
+            background: #f1f5f9;
         }
 
         .chevron-icon {
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             font-size: 13px;
             transition: transform 0.25s ease;
         }
@@ -266,13 +282,13 @@
 
         .member-body {
             padding: 12px 14px;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border-color);
             background: #ffffff;
         }
 
         .count-pill {
             background: var(--light-blue);
-            color: var(--primary-blue);
+            color: var(--accent-blue);
             font-size: 11px;
             font-weight: 700;
             padding: 2px 8px;
@@ -286,11 +302,11 @@
 
     <div class="container">
         
-        <!-- شاشة تسجيل الدخول -->
+        <!-- شاشة تسجيل الدخول الرسمية الجديدة -->
         <div id="loginSection" class="login-box">
-            <div class="system-icon"><i class="fa-solid fa-cloud-lock"></i></div>
-            <h2>خزنة العائلة السحابية</h2>
-            <p class="subtitle">مزامنة فورية وتلقائية لأجهزة العائلة</p>
+            <div class="system-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h2>نظام إدارة الحسابات</h2>
+            <p class="subtitle">تسجيل الدخول الآمن والمزامنة السحابية</p>
             
             <div class="form-group">
                 <label>اسم المستخدم</label>
@@ -302,7 +318,7 @@
             </div>
             
             <button class="btn btn-primary" onclick="login()" style="margin-top: 6px;">
-                <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
+                <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
             </button>
         </div>
 
@@ -327,7 +343,7 @@
             </div>
 
             <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد (تاريخ رسمي تلقائي)</div>
+                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد</div>
                 <div class="grid-2">
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>اسم التطبيق</label>
@@ -364,7 +380,7 @@
             <div class="top-bar">
                 <div>
                     <span class="admin-badge"><i class="fa-solid fa-crown"></i> المشرف العام (مزامنة سحابية)</span>
-                    <h3 style="margin-top: 3px; font-size: 17px;">إدارة العائلة</h3>
+                    <h3 style="margin-top: 3px; font-size: 17px;">إدارة المستخدمين</h3>
                 </div>
                 <div class="top-bar-actions">
                     <button class="btn btn-outline btn-sm" onclick="renderAdminView()">
@@ -380,7 +396,7 @@
             </div>
 
             <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-user-plus"></i> إضافة فرد جديد للعائلة</div>
+                <div class="panel-title"><i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد</div>
                 <div class="grid-2">
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>اسم المستخدم</label>
@@ -392,11 +408,11 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="adminCreateMember()" style="margin-top: 10px;">
-                    <i class="fa-solid fa-check"></i> إضافة الفرد سحابياً
+                    <i class="fa-solid fa-check"></i> إضافة المستخدم سحابياً
                 </button>
             </div>
 
-            <h4 style="font-size: 14px; margin-bottom: 8px;">أفراد العائلة (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته:</h4>
+            <h4 style="font-size: 14px; margin-bottom: 8px;">المستخدمون المسجلون (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته:</h4>
             <div id="adminAllDataContainer"></div>
         </div>
 
@@ -420,7 +436,7 @@
         let currentUser = null;
         let currentMemberDocId = null;
         let autoSyncInterval = null;
-        let expandedMembers = new Set(); // لحفظ حالة الفتح للأشخاص أثناء التحديث التلقائي
+        let expandedMembers = new Set();
 
         function toggleView(viewId) {
             ['loginSection', 'userDashboard', 'adminDashboard'].forEach(id => {
@@ -635,7 +651,6 @@
             renderAdminView();
         }
 
-        // دالة فتح/إغلاق القائمة المنسدلة المباشرة لكل مستخدم
         function toggleMemberAccordion(mId) {
             const body = document.getElementById(`accordion-body-${mId}`);
             const icon = document.getElementById(`accordion-icon-${mId}`);
@@ -659,7 +674,7 @@
             container.innerHTML = '';
 
             if (snapshot.empty) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:12px;">لا يوجد أفراد مسجلون.</p>';
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:12px;">لا يوجد مستخدمون مسجلون.</p>';
                 return;
             }
 
@@ -671,9 +686,9 @@
                 let entriesHtml = '';
                 
                 if (appCount === 0) {
-                    entriesHtml = '<p style="font-size: 12.5px; color: var(--text-muted); padding: 4px 0;">لا توجد تطبيقات مضافة لهذا الشخص.</p>';
+                    entriesHtml = '<p style="font-size: 12.5px; color: var(--text-muted); padding: 4px 0;">لا توجد تطبيقات مضافة لهذا المستخدم.</p>';
                 } else {
-                    entriesHtml = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>التطبيق</th><th>كلمة السر</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody>`;
+                    entriesHtml = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>التطبيق</th><th>كلمة السر</th><th>التاريخ</th><th>إجراءات المشرف</th></tr></thead><tbody>`;
                     member.entries.forEach((ent, entIndex) => {
                         entriesHtml += `
                             <tr>
@@ -686,7 +701,7 @@
                                 </td>
                                 <td>${ent.date}</td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm" onclick="adminEditAppPassword('${mId}', ${entIndex}, '${ent.app}', '${ent.pass}')" title="تعديل الباسورد"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn btn-warning btn-sm" onclick="adminEditAppPassword('${mId}', ${entIndex}, '${ent.app}', '${ent.pass}')" title="تعديل الباسورد">تعديل الباسورد</button>
                                 </td>
                             </tr>
                         `;
@@ -699,20 +714,16 @@
                         <div class="member-header" onclick="toggleMemberAccordion('${mId}')">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <i id="accordion-icon-${mId}" class="fa-solid fa-chevron-down chevron-icon ${isExpanded ? 'rotated' : ''}"></i>
-                                <strong style="color: var(--primary-blue); font-size: 14.5px;">${member.username}</strong>
+                                <strong style="color: var(--accent-blue); font-size: 14.5px;">${member.username}</strong>
+                                <span style="font-size: 12px; color: var(--text-muted);">الباسورد العام: <span class="pass-badge">${member.password}</span></span>
                                 <span class="count-pill">${appCount} تطبيق</span>
                             </div>
                             <div style="display: flex; gap: 4px;" onclick="event.stopPropagation()">
-                                <button class="btn btn-warning btn-sm" onclick="adminEditMemberPassword('${mId}', '${member.username}', '${member.password}')" title="تغيير باسورد الدخول"><i class="fa-solid fa-key"></i></button>
-                                <button class="btn btn-danger btn-sm" onclick="adminDeleteMember('${mId}')" title="حذف الفرد"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-warning btn-sm" onclick="adminEditMemberPassword('${mId}', '${member.username}', '${member.password}')">تعديل باسورد الحساب</button>
+                                <button class="btn btn-danger btn-sm" onclick="adminDeleteMember('${mId}')">حذف</button>
                             </div>
                         </div>
                         <div id="accordion-body-${mId}" class="member-body ${isExpanded ? '' : 'hidden'}">
-                            <div style="margin-bottom: 8px; font-size: 12.5px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                                <span>باسورد دخول الحساب:</span>
-                                <span class="pass-badge">${member.password}</span>
-                                <button class="btn-copy-pass" onclick="copyPassword('${member.password}')"><i class="fa-solid fa-copy"></i></button>
-                            </div>
                             ${entriesHtml}
                         </div>
                     </div>
@@ -757,7 +768,7 @@
         }
 
         async function adminDeleteMember(mId) {
-            if (!confirm('حذف هذا الفرد نهائياً؟')) return;
+            if (!confirm('حذف هذا المستخدم نهائياً؟')) return;
             expandedMembers.delete(mId);
             await db.collection('members').doc(mId).delete();
             renderAdminView();
