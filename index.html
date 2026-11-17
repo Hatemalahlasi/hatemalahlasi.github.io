@@ -179,7 +179,7 @@
             .grid-2 { grid-template-columns: 1fr 1fr; }
         }
 
-        .table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid #e2e8f0; -webkit-overflow-scrolling: touch; }
+        .table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid #e2e8f0; -webkit-overflow-scrolling: touch; margin-top: 8px; }
 
         .data-table {
             width: 100%;
@@ -228,45 +228,46 @@
             font-size: 12px;
         }
 
-        /* بطاقة المستخدم المرتبطة في لوحة المشرف */
-        .member-card {
+        /* تصميم القائمة المنسدلة المباشرة داخل الصفحة للمشرف */
+        .member-block {
             background: #ffffff;
             border: 1.5px solid var(--border-color);
             border-radius: 12px;
-            padding: 12px 14px;
             margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .member-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
+            padding: 12px 14px;
+            background: #f8fafc;
             cursor: pointer;
-            transition: all 0.2s ease;
+            user-select: none;
         }
 
-        .member-card:hover {
+        .member-header:hover {
             background: #f0f7ff;
-            border-color: var(--primary-blue);
-            transform: translateY(-1px);
         }
 
-        .member-info-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .member-avatar {
-            width: 38px;
-            height: 38px;
-            background: var(--light-blue);
+        .chevron-icon {
             color: var(--primary-blue);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 13px;
+            transition: transform 0.25s ease;
+        }
+
+        .chevron-icon.rotated {
+            transform: rotate(-180deg);
+        }
+
+        .member-body {
+            padding: 12px 14px;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
         }
 
         .count-pill {
@@ -276,53 +277,6 @@
             font-weight: 700;
             padding: 2px 8px;
             border-radius: 12px;
-        }
-
-        /* نافذة منبثقة (Modal) تعرض بيانات الشخص فقط عند الضغط عليه */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(3px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px;
-            z-index: 1000;
-        }
-
-        .modal-box {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 650px;
-            max-height: 88vh;
-            overflow-y: auto;
-            padding: 18px;
-            box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--light-blue);
-            padding-bottom: 12px;
-            margin-bottom: 14px;
-        }
-
-        .modal-user-meta {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 10px 12px;
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
         }
 
         .hidden { display: none !important; }
@@ -373,7 +327,7 @@
             </div>
 
             <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد</div>
+                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد (تاريخ رسمي تلقائي)</div>
                 <div class="grid-2">
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>اسم التطبيق</label>
@@ -442,27 +396,10 @@
                 </button>
             </div>
 
-            <h4 style="font-size: 14px; margin-bottom: 8px;">أفراد العائلة (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته الخاصة:</h4>
+            <h4 style="font-size: 14px; margin-bottom: 8px;">أفراد العائلة (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته:</h4>
             <div id="adminAllDataContainer"></div>
         </div>
 
-    </div>
-
-    <!-- نافذة منبثقة تعرض بيانات الشخص المحدد فقط عند النقر -->
-    <div id="memberDetailsModal" class="modal-overlay hidden" onclick="closeMemberModal(event)">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-user-shield" style="color: var(--primary-blue); font-size: 20px;"></i>
-                    <h3 id="modalMemberName" style="font-size: 17px; font-weight: 800;">بيانات الحساب</h3>
-                </div>
-                <button class="btn btn-danger btn-sm" onclick="closeMemberModal()">
-                    <i class="fa-solid fa-xmark"></i> إغلاق
-                </button>
-            </div>
-
-            <div id="modalMemberContent"></div>
-        </div>
     </div>
 
     <script>
@@ -483,8 +420,7 @@
         let currentUser = null;
         let currentMemberDocId = null;
         let autoSyncInterval = null;
-        let membersCache = {}; 
-        let activeModalMemberId = null; 
+        let expandedMembers = new Set(); // لحفظ حالة الفتح للأشخاص أثناء التحديث التلقائي
 
         function toggleView(viewId) {
             ['loginSection', 'userDashboard', 'adminDashboard'].forEach(id => {
@@ -547,10 +483,7 @@
                         renderUserEntries(doc.data().entries || []);
                     }
                 } else if (role === 'admin') {
-                    await renderAdminView();
-                    if (activeModalMemberId && membersCache[activeModalMemberId]) {
-                        renderMemberModalBody(activeModalMemberId);
-                    }
+                    renderAdminView();
                 }
             }, 5000);
         }
@@ -702,13 +635,28 @@
             renderAdminView();
         }
 
-        // عرض أسماء المستخدمين فقط في لوحة المشرف بشكل مرتب ونظيف
+        // دالة فتح/إغلاق القائمة المنسدلة المباشرة لكل مستخدم
+        function toggleMemberAccordion(mId) {
+            const body = document.getElementById(`accordion-body-${mId}`);
+            const icon = document.getElementById(`accordion-icon-${mId}`);
+            if (!body || !icon) return;
+
+            if (expandedMembers.has(mId)) {
+                expandedMembers.delete(mId);
+                body.classList.add('hidden');
+                icon.classList.remove('rotated');
+            } else {
+                expandedMembers.add(mId);
+                body.classList.remove('hidden');
+                icon.classList.add('rotated');
+            }
+        }
+
         async function renderAdminView() {
             const snapshot = await db.collection('members').get();
             document.getElementById('membersCount').innerText = snapshot.size;
             const container = document.getElementById('adminAllDataContainer');
             container.innerHTML = '';
-            membersCache = {};
 
             if (snapshot.empty) {
                 container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:12px;">لا يوجد أفراد مسجلون.</p>';
@@ -718,107 +666,58 @@
             snapshot.forEach(docSnap => {
                 const member = docSnap.data();
                 const mId = docSnap.id;
-                membersCache[mId] = member;
+                const isExpanded = expandedMembers.has(mId);
                 const appCount = member.entries ? member.entries.length : 0;
-                const firstLetter = member.username ? member.username.charAt(0) : '؟';
+                let entriesHtml = '';
+                
+                if (appCount === 0) {
+                    entriesHtml = '<p style="font-size: 12.5px; color: var(--text-muted); padding: 4px 0;">لا توجد تطبيقات مضافة لهذا الشخص.</p>';
+                } else {
+                    entriesHtml = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>التطبيق</th><th>كلمة السر</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody>`;
+                    member.entries.forEach((ent, entIndex) => {
+                        entriesHtml += `
+                            <tr>
+                                <td><strong>${ent.app}</strong></td>
+                                <td>
+                                    <div class="pass-container">
+                                        <span class="pass-badge">${ent.pass}</span>
+                                        <button class="btn-copy-pass" onclick="copyPassword('${ent.pass}')"><i class="fa-solid fa-copy"></i></button>
+                                    </div>
+                                </td>
+                                <td>${ent.date}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="adminEditAppPassword('${mId}', ${entIndex}, '${ent.app}', '${ent.pass}')" title="تعديل الباسورد"><i class="fa-solid fa-pen"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    entriesHtml += `</tbody></table></div>`;
+                }
 
                 container.innerHTML += `
-                    <div class="member-card" onclick="openMemberModal('${mId}')">
-                        <div class="member-info-left">
-                            <div class="member-avatar">${firstLetter}</div>
-                            <div>
-                                <strong style="color: var(--text-dark); font-size: 15px; display: block;">${member.username}</strong>
-                                <span style="font-size: 11.5px; color: var(--text-muted);">اضغط لعرض كافة بيانات وكلمات سر الشخص (${appCount} تطبيق)</span>
+                    <div class="member-block">
+                        <div class="member-header" onclick="toggleMemberAccordion('${mId}')">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i id="accordion-icon-${mId}" class="fa-solid fa-chevron-down chevron-icon ${isExpanded ? 'rotated' : ''}"></i>
+                                <strong style="color: var(--primary-blue); font-size: 14.5px;">${member.username}</strong>
+                                <span class="count-pill">${appCount} تطبيق</span>
+                            </div>
+                            <div style="display: flex; gap: 4px;" onclick="event.stopPropagation()">
+                                <button class="btn btn-warning btn-sm" onclick="adminEditMemberPassword('${mId}', '${member.username}', '${member.password}')" title="تغيير باسورد الدخول"><i class="fa-solid fa-key"></i></button>
+                                <button class="btn btn-danger btn-sm" onclick="adminDeleteMember('${mId}')" title="حذف الفرد"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                            <span class="count-pill"><i class="fa-solid fa-folder-open"></i> استعراض</span>
-                            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); adminDeleteMember('${mId}')" title="حذف الفرد">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                        <div id="accordion-body-${mId}" class="member-body ${isExpanded ? '' : 'hidden'}">
+                            <div style="margin-bottom: 8px; font-size: 12.5px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                <span>باسورد دخول الحساب:</span>
+                                <span class="pass-badge">${member.password}</span>
+                                <button class="btn-copy-pass" onclick="copyPassword('${member.password}')"><i class="fa-solid fa-copy"></i></button>
+                            </div>
+                            ${entriesHtml}
                         </div>
                     </div>
                 `;
             });
-        }
-
-        // فتح النافذة المنبثقة الخاصة بالشخص عند الضغط عليه
-        function openMemberModal(mId) {
-            const member = membersCache[mId];
-            if (!member) return;
-            activeModalMemberId = mId;
-            document.getElementById('modalMemberName').innerText = `بيانات الحساب: ${member.username}`;
-            renderMemberModalBody(mId);
-            document.getElementById('memberDetailsModal').classList.remove('hidden');
-        }
-
-        // عرض محتوى النافذة المنبثقة (كلمات السر، التطبيقات، وإمكانية تعديلها)
-        function renderMemberModalBody(mId) {
-            const member = membersCache[mId];
-            if (!member) return;
-            const contentDiv = document.getElementById('modalMemberContent');
-            const entries = member.entries || [];
-
-            let appsTableHtml = '';
-            if (entries.length === 0) {
-                appsTableHtml = '<p style="text-align:center; color:var(--text-muted); padding:16px; font-size:13px;">لم يقم هذا المستخدم بإضافة أي تطبيقات بعد.</p>';
-            } else {
-                appsTableHtml = `
-                    <div class="table-wrapper">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>التطبيق</th>
-                                    <th>كلمة السر</th>
-                                    <th>التاريخ</th>
-                                    <th>إجراءات المشرف</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-                entries.forEach((ent, entIndex) => {
-                    appsTableHtml += `
-                        <tr>
-                            <td><strong>${ent.app}</strong></td>
-                            <td>
-                                <div class="pass-container">
-                                    <span class="pass-badge">${ent.pass}</span>
-                                    <button class="btn-copy-pass" onclick="copyPassword('${ent.pass}')"><i class="fa-solid fa-copy"></i></button>
-                                </div>
-                            </td>
-                            <td>${ent.date}</td>
-                            <td>
-                                <div style="display: flex; gap: 4px;">
-                                    <button class="btn btn-warning btn-sm" onclick="adminEditAppPassword('${mId}', ${entIndex}, '${ent.app}', '${ent.pass}')" title="تعديل الباسورد"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn btn-danger btn-sm" onclick="adminDeleteAppEntry('${mId}', ${entIndex}, '${ent.app}')" title="حذف التطبيق"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-                appsTableHtml += `</tbody></table></div>`;
-            }
-
-            contentDiv.innerHTML = `
-                <div class="modal-user-meta">
-                    <div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
-                        <span style="font-weight: 700;">باسورد دخول الحساب:</span>
-                        <span class="pass-badge">${member.password}</span>
-                        <button class="btn-copy-pass" onclick="copyPassword('${member.password}')"><i class="fa-solid fa-copy"></i></button>
-                    </div>
-                    <button class="btn btn-warning btn-sm" onclick="adminEditMemberPassword('${mId}', '${member.username}', '${member.password}')">
-                        <i class="fa-solid fa-key"></i> تغيير باسورد الحساب
-                    </button>
-                </div>
-                <h4 style="font-size: 13.5px; margin-bottom: 8px; color: var(--primary-blue);">التطبيقات وكلمات السر المسجلة (${entries.length}):</h4>
-                ${appsTableHtml}
-            `;
-        }
-
-        function closeMemberModal(event) {
-            if (event && event.target !== document.getElementById('memberDetailsModal')) return;
-            activeModalMemberId = null;
-            document.getElementById('memberDetailsModal').classList.add('hidden');
         }
 
         async function adminEditAppPassword(mId, entIndex, appName, currentPass) {
@@ -838,22 +737,7 @@
             entries[entIndex].date = new Date().toISOString().split('T')[0];
 
             await docRef.update({ entries });
-            await renderAdminView();
-            if (activeModalMemberId === mId) renderMemberModalBody(mId);
-        }
-
-        async function adminDeleteAppEntry(mId, entIndex, appName) {
-            if (!confirm(`هل تريد حذف تطبيق (${appName}) من سجل هذا المستخدم؟`)) return;
-            const docRef = db.collection('members').doc(mId);
-            const doc = await docRef.get();
-            if (!doc.exists) return;
-
-            let entries = doc.data().entries || [];
-            entries.splice(entIndex, 1);
-
-            await docRef.update({ entries });
-            await renderAdminView();
-            if (activeModalMemberId === mId) renderMemberModalBody(mId);
+            renderAdminView();
         }
 
         async function adminEditMemberPassword(mId, username, currentPass) {
@@ -869,13 +753,12 @@
                 password: newPass.trim()
             });
 
-            await renderAdminView();
-            if (activeModalMemberId === mId) renderMemberModalBody(mId);
+            renderAdminView();
         }
 
         async function adminDeleteMember(mId) {
             if (!confirm('حذف هذا الفرد نهائياً؟')) return;
-            if (activeModalMemberId === mId) closeMemberModal();
+            expandedMembers.delete(mId);
             await db.collection('members').doc(mId).delete();
             renderAdminView();
         }
@@ -887,7 +770,7 @@
 
         function logout() {
             if (autoSyncInterval) clearInterval(autoSyncInterval);
-            activeModalMemberId = null;
+            expandedMembers.clear();
             currentUser = null;
             currentMemberDocId = null;
             toggleView('loginSection');
