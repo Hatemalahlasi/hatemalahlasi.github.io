@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>نظام إدارة الحسابات السحابي | Cloud Vault</title>
+    <title>خزنة الحسابات الشخصية | حاتم الأحلصي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -60,7 +60,6 @@
             }
         }
 
-        /* تصميم شاشة تسجيل الدخول الرسمية الجديدة */
         .login-box {
             max-width: 380px;
             margin: 0 auto;
@@ -245,56 +244,6 @@
             font-size: 12px;
         }
 
-        .member-block {
-            background: #ffffff;
-            border: 1.5px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-
-        .member-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 12px 14px;
-            background: #f8fafc;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .member-header:hover {
-            background: #f1f5f9;
-        }
-
-        .chevron-icon {
-            color: var(--accent-blue);
-            font-size: 13px;
-            transition: transform 0.25s ease;
-        }
-
-        .chevron-icon.rotated {
-            transform: rotate(-180deg);
-        }
-
-        .member-body {
-            padding: 12px 14px;
-            border-top: 1px solid var(--border-color);
-            background: #ffffff;
-        }
-
-        .count-pill {
-            background: var(--light-blue);
-            color: var(--accent-blue);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 12px;
-        }
-
         .hidden { display: none !important; }
     </style>
 </head>
@@ -302,11 +251,11 @@
 
     <div class="container">
         
-        <!-- شاشة تسجيل الدخول الرسمية الجديدة -->
+        <!-- شاشة تسجيل الدخول الشخصية -->
         <div id="loginSection" class="login-box">
-            <div class="system-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <h2>نظام إدارة الحسابات</h2>
-            <p class="subtitle">تسجيل الدخول الآمن والمزامنة السحابية</p>
+            <div class="system-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <h2>حاتم الأحلصي</h2>
+            <p class="subtitle">نظام إدارة الحسابات الشخصية السحابي</p>
             
             <div class="form-group">
                 <label>اسم المستخدم</label>
@@ -322,12 +271,12 @@
             </button>
         </div>
 
-        <!-- لوحة المستخدم -->
+        <!-- لوحة التحكم الشخصية (حاتم) -->
         <div id="userDashboard" class="hidden">
             <div class="top-bar">
                 <div>
-                    <span class="admin-badge"><i class="fa-solid fa-user-check"></i> حساب شخصي سحابي</span>
-                    <h3 style="margin-top: 3px; font-size: 17px;" id="welcomeUserTitle">أهلاً بك</h3>
+                    <span class="admin-badge"><i class="fa-solid fa-user-check"></i> لوحة التحكم الشخصية</span>
+                    <h3 style="margin-top: 3px; font-size: 17px;" id="welcomeUserTitle">أهلاً بك، حاتم</h3>
                 </div>
                 <div class="top-bar-actions">
                     <button class="btn btn-outline btn-sm" onclick="refreshUserDataManual()">
@@ -343,11 +292,11 @@
             </div>
 
             <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد</div>
+                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة حساب أو تطبيق جديد (فيس بوك، انستقرام...)</div>
                 <div class="grid-2">
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label>اسم التطبيق</label>
-                        <input type="text" id="appName" placeholder="مثال: الوتس">
+                        <label>اسم التطبيق أو الحساب</label>
+                        <input type="text" id="appName" placeholder="مثال: انستقرام - فيسبوك">
                     </div>
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>كلمة السر</label>
@@ -359,7 +308,7 @@
                 </button>
             </div>
 
-            <h4 style="font-size: 13.5px; margin-bottom: 6px;">حساباتك المسجلة:</h4>
+            <h4 style="font-size: 13.5px; margin-bottom: 6px;">حساباتك الشخصية المسجلة:</h4>
             <div class="table-wrapper">
                 <table class="data-table">
                     <thead>
@@ -373,47 +322,6 @@
                     <tbody id="userEntriesTable"></tbody>
                 </table>
             </div>
-        </div>
-
-        <!-- لوحة المشرف -->
-        <div id="adminDashboard" class="hidden">
-            <div class="top-bar">
-                <div>
-                    <span class="admin-badge"><i class="fa-solid fa-crown"></i> المشرف العام (مزامنة سحابية)</span>
-                    <h3 style="margin-top: 3px; font-size: 17px;">إدارة المستخدمين</h3>
-                </div>
-                <div class="top-bar-actions">
-                    <button class="btn btn-outline btn-sm" onclick="renderAdminView()">
-                        <i class="fa-solid fa-rotate"></i> تحديث
-                    </button>
-                    <button class="btn btn-outline btn-sm" onclick="changeAdminPassword()">
-                        <i class="fa-solid fa-key"></i> الباسورد
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="logout()">
-                        <i class="fa-solid fa-power-off"></i> خروج
-                    </button>
-                </div>
-            </div>
-
-            <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد</div>
-                <div class="grid-2">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>اسم المستخدم</label>
-                        <input type="text" id="newMemberUser" placeholder="مثال: أحمد">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>كلمة المرور</label>
-                        <input type="text" id="newMemberPass" placeholder="مثال: 2026">
-                    </div>
-                </div>
-                <button class="btn btn-primary" onclick="adminCreateMember()" style="margin-top: 10px;">
-                    <i class="fa-solid fa-check"></i> إضافة المستخدم سحابياً
-                </button>
-            </div>
-
-            <h4 style="font-size: 14px; margin-bottom: 8px;">المستخدمون المسجلون (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته:</h4>
-            <div id="adminAllDataContainer"></div>
         </div>
 
     </div>
@@ -432,27 +340,15 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        const ADMIN_USER = "hatem";
-        let currentUser = null;
+        const OWNER_USER = "hatem"; // اسم المستخدم الخاص بك
         let currentMemberDocId = null;
         let autoSyncInterval = null;
-        let expandedMembers = new Set();
 
         function toggleView(viewId) {
-            ['loginSection', 'userDashboard', 'adminDashboard'].forEach(id => {
+            ['loginSection', 'userDashboard'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             document.getElementById(viewId).classList.remove('hidden');
-        }
-
-        async function getAdminPass() {
-            const doc = await db.collection('settings').doc('admin').get();
-            if (doc.exists) {
-                return doc.data().password;
-            } else {
-                await db.collection('settings').doc('admin').set({ password: "12345" });
-                return "12345";
-            }
         }
 
         async function login() {
@@ -464,42 +360,30 @@
                 return;
             }
 
-            const adminPass = await getAdminPass();
-            if (u === ADMIN_USER && p === adminPass) {
-                document.getElementById('loginUsername').value = '';
-                document.getElementById('loginPassword').value = '';
-                renderAdminView();
-                toggleView('adminDashboard');
-                startAutoSync('admin');
-                return;
-            }
-
+            // البحث عن حسابك في قاعدة البيانات
             const snapshot = await db.collection('members').where('username', '==', u).where('password', '==', p).get();
             if (!snapshot.empty) {
                 const doc = snapshot.docs[0];
-                currentUser = u;
                 currentMemberDocId = doc.id;
                 document.getElementById('loginUsername').value = '';
                 document.getElementById('loginPassword').value = '';
                 document.getElementById('welcomeUserTitle').innerText = `أهلاً بك، ${u}`;
                 renderUserEntries(doc.data().entries || []);
                 toggleView('userDashboard');
-                startAutoSync('user');
+                startAutoSync();
             } else {
                 alert('خطأ في اسم المستخدم أو كلمة المرور!');
             }
         }
 
-        function startAutoSync(role) {
+        function startAutoSync() {
             if (autoSyncInterval) clearInterval(autoSyncInterval);
             autoSyncInterval = setInterval(async () => {
-                if (role === 'user' && currentMemberDocId) {
+                if (currentMemberDocId) {
                     const doc = await db.collection('members').doc(currentMemberDocId).get();
                     if (doc.exists) {
                         renderUserEntries(doc.data().entries || []);
                     }
-                } else if (role === 'admin') {
-                    renderAdminView();
                 }
             }, 5000);
         }
@@ -530,21 +414,6 @@
 
             await memberRef.update({ password: newPass.trim() });
             alert('تم تغيير كلمة المرور وحفظها في السحابة بنجاح!');
-        }
-
-        async function changeAdminPassword() {
-            const oldPass = prompt('أدخل كلمة مرور المشرف الحالية:');
-            if (oldPass === null) return;
-            const adminPass = await getAdminPass();
-            if (oldPass !== adminPass) {
-                alert('كلمة المرور الحالية غير صحيحة!');
-                return;
-            }
-            const newPass = prompt('أدخل كلمة مرور المشرف الجديدة:');
-            if (!newPass || !newPass.trim()) return;
-
-            await db.collection('settings').doc('admin').set({ password: newPass.trim() });
-            alert('تم تغيير كلمة مرور المشرف بنجاح!');
         }
 
         async function addUserEntry() {
@@ -631,149 +500,6 @@
             renderUserEntries(entries);
         }
 
-        async function adminCreateMember() {
-            const username = document.getElementById('newMemberUser').value.trim();
-            const password = document.getElementById('newMemberPass').value.trim();
-
-            if (!username || !password) {
-                alert('أدخل اسم المستخدم وكلمة المرور');
-                return;
-            }
-
-            await db.collection('members').add({
-                username,
-                password,
-                entries: []
-            });
-
-            document.getElementById('newMemberUser').value = '';
-            document.getElementById('newMemberPass').value = '';
-            renderAdminView();
-        }
-
-        function toggleMemberAccordion(mId) {
-            const body = document.getElementById(`accordion-body-${mId}`);
-            const icon = document.getElementById(`accordion-icon-${mId}`);
-            if (!body || !icon) return;
-
-            if (expandedMembers.has(mId)) {
-                expandedMembers.delete(mId);
-                body.classList.add('hidden');
-                icon.classList.remove('rotated');
-            } else {
-                expandedMembers.add(mId);
-                body.classList.remove('hidden');
-                icon.classList.add('rotated');
-            }
-        }
-
-        async function renderAdminView() {
-            const snapshot = await db.collection('members').get();
-            document.getElementById('membersCount').innerText = snapshot.size;
-            const container = document.getElementById('adminAllDataContainer');
-            container.innerHTML = '';
-
-            if (snapshot.empty) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:12px;">لا يوجد مستخدمون مسجلون.</p>';
-                return;
-            }
-
-            snapshot.forEach(docSnap => {
-                const member = docSnap.data();
-                const mId = docSnap.id;
-                const isExpanded = expandedMembers.has(mId);
-                const appCount = member.entries ? member.entries.length : 0;
-                let entriesHtml = '';
-                
-                if (appCount === 0) {
-                    entriesHtml = '<p style="font-size: 12.5px; color: var(--text-muted); padding: 4px 0;">لا توجد تطبيقات مضافة لهذا المستخدم.</p>';
-                } else {
-                    entriesHtml = `<div class="table-wrapper"><table class="data-table"><thead><tr><th>التطبيق</th><th>كلمة السر</th><th>التاريخ</th><th>إجراءات المشرف</th></tr></thead><tbody>`;
-                    member.entries.forEach((ent, entIndex) => {
-                        entriesHtml += `
-                            <tr>
-                                <td><strong>${ent.app}</strong></td>
-                                <td>
-                                    <div class="pass-container">
-                                        <span class="pass-badge">${ent.pass}</span>
-                                        <button class="btn-copy-pass" onclick="copyPassword('${ent.pass}')"><i class="fa-solid fa-copy"></i></button>
-                                    </div>
-                                </td>
-                                <td>${ent.date}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" onclick="adminEditAppPassword('${mId}', ${entIndex}, '${ent.app}', '${ent.pass}')" title="تعديل الباسورد">تعديل الباسورد</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    entriesHtml += `</tbody></table></div>`;
-                }
-
-                container.innerHTML += `
-                    <div class="member-block">
-                        <div class="member-header" onclick="toggleMemberAccordion('${mId}')">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <i id="accordion-icon-${mId}" class="fa-solid fa-chevron-down chevron-icon ${isExpanded ? 'rotated' : ''}"></i>
-                                <strong style="color: var(--accent-blue); font-size: 14.5px;">${member.username}</strong>
-                                <span style="font-size: 12px; color: var(--text-muted);">الباسورد العام: <span class="pass-badge">${member.password}</span></span>
-                                <span class="count-pill">${appCount} تطبيق</span>
-                            </div>
-                            <div style="display: flex; gap: 4px;" onclick="event.stopPropagation()">
-                                <button class="btn btn-warning btn-sm" onclick="adminEditMemberPassword('${mId}', '${member.username}', '${member.password}')">تعديل باسورد الحساب</button>
-                                <button class="btn btn-danger btn-sm" onclick="adminDeleteMember('${mId}')">حذف</button>
-                            </div>
-                        </div>
-                        <div id="accordion-body-${mId}" class="member-body ${isExpanded ? '' : 'hidden'}">
-                            ${entriesHtml}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        async function adminEditAppPassword(mId, entIndex, appName, currentPass) {
-            const newPass = prompt(`تعديل كلمة السر لتطبيق (${appName}):`, currentPass);
-            if (newPass === null) return;
-            if (!newPass.trim()) {
-                alert('كلمة السر لا يمكن أن تكون فارغة!');
-                return;
-            }
-
-            const docRef = db.collection('members').doc(mId);
-            const doc = await docRef.get();
-            if (!doc.exists) return;
-
-            let entries = doc.data().entries || [];
-            entries[entIndex].pass = newPass.trim();
-            entries[entIndex].date = new Date().toISOString().split('T')[0];
-
-            await docRef.update({ entries });
-            renderAdminView();
-        }
-
-        async function adminEditMemberPassword(mId, username, currentPass) {
-            const newPass = prompt(`تعديل كلمة المرور الخاصة بالحساب (${username}):`, currentPass);
-            if (newPass === null) return;
-
-            if (!newPass.trim()) {
-                alert('كلمة المرور لا يمكن أن تكون فارغة!');
-                return;
-            }
-
-            await db.collection('members').doc(mId).update({
-                password: newPass.trim()
-            });
-
-            renderAdminView();
-        }
-
-        async function adminDeleteMember(mId) {
-            if (!confirm('حذف هذا المستخدم نهائياً؟')) return;
-            expandedMembers.delete(mId);
-            await db.collection('members').doc(mId).delete();
-            renderAdminView();
-        }
-
         function copyPassword(text) {
             navigator.clipboard.writeText(text);
             alert('تم نسخ كلمة المرور!');
@@ -781,8 +507,6 @@
 
         function logout() {
             if (autoSyncInterval) clearInterval(autoSyncInterval);
-            expandedMembers.clear();
-            currentUser = null;
             currentMemberDocId = null;
             toggleView('loginSection');
         }
