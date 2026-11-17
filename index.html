@@ -3,31 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>خزنة الحسابات الشخصية | حاتم الأحلصي</title>
+    <title>حاتم الأحلصي | الملف الشخصي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- استدعاء مكتبات Firebase السحابية -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
     <style>
         :root {
-            --bg-page: #f8fafc;
-            --bg-card: #ffffff;
-            --primary-blue: #0f172a;
+            --bg-page: #0f172a;
+            --bg-card: #1e293b;
             --accent-blue: #0284c7;
-            --light-blue: #f1f5f9;
             --hover-blue: #0369a1;
-            --border-color: #e2e8f0;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --danger: #dc2626;
-            --danger-bg: #fee2e2;
-            --warning-bg: #fef3c7;
-            --warning: #d97706;
+            --border-color: #334155;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,481 +25,146 @@
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-page);
-            color: var(--text-dark);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
         }
 
-        .container {
+        .profile-container {
             width: 100%;
-            max-width: 850px;
+            max-width: 450px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
         }
 
-        @media (min-width: 768px) {
-            .container {
-                padding: 32px;
-                border-radius: 20px;
-            }
-        }
-
-        .login-box {
-            max-width: 380px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 24px 16px;
-        }
-
-        .system-icon {
-            width: 64px;
-            height: 64px;
-            background: #e0f2fe;
-            color: var(--accent-blue);
-            border-radius: 16px;
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #0284c7, #0f172a);
+            color: #ffffff;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 16px;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
+            font-size: 36px;
+            border: 3px solid var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
         }
 
-        .login-box h2 {
-            text-align: center;
-            font-size: 20px;
+        h1 {
+            font-size: 22px;
             font-weight: 800;
-            color: var(--text-dark);
             margin-bottom: 6px;
+            color: var(--text-light);
         }
 
-        .login-box .subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 24px;
-        }
-
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 12.5px; margin-bottom: 5px; font-weight: 700; color: var(--text-dark); }
-
-        .form-group input {
-            width: 100%;
-            padding: 11px 14px;
-            background: #f8fafc;
-            border: 1.5px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-dark);
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .form-group input:focus {
-            border-color: var(--accent-blue);
-            background: #ffffff;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: none;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-primary { background: var(--accent-blue); color: #ffffff; }
-        .btn-primary:hover { background: var(--hover-blue); }
-
-        .btn-outline { background: var(--light-blue); color: var(--accent-blue); border: 1px solid var(--border-color); }
-        .btn-outline:hover { background: #e2e8f0; }
-
-        .btn-warning { background: var(--warning-bg); color: var(--warning); }
-        .btn-warning:hover { background: var(--warning); color: #ffffff; }
-
-        .btn-danger { background: var(--danger-bg); color: var(--danger); }
-        .btn-danger:hover { background: var(--danger); color: #ffffff; }
-
-        .btn-sm { padding: 6px 10px; font-size: 12px; width: auto; border-radius: 7px; }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 2px solid var(--light-blue);
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-        }
-
-        .top-bar-actions {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .admin-badge {
-            background: var(--light-blue);
-            color: var(--accent-blue);
-            padding: 3px 10px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .panel-card {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 14px;
-        }
-
-        .panel-title {
+        .bio-text {
             font-size: 13.5px;
-            font-weight: 800;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
         }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 8px; }
-
-        @media (min-width: 640px) {
-            .grid-2 { grid-template-columns: 1fr 1fr; }
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border-color); -webkit-overflow-scrolling: touch; margin-top: 8px; }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12.5px;
-            background: #ffffff;
-            white-space: nowrap;
-        }
-
-        .data-table th {
-            background: var(--light-blue);
-            color: var(--text-dark);
-            font-weight: 800;
-            text-align: right;
-            padding: 9px 11px;
-        }
-
-        .data-table td {
-            padding: 9px 11px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .pass-container {
-            display: inline-flex;
+        .social-btn {
+            display: flex;
             align-items: center;
-            gap: 6px;
-            background: #f1f5f9;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: #0f172a;
             border: 1px solid var(--border-color);
-            padding: 2px 6px;
-            border-radius: 5px;
-        }
-
-        .pass-badge {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-blue);
+            border-radius: 14px;
+            color: var(--text-light);
+            text-decoration: none;
             font-weight: 700;
-            direction: ltr;
-            font-size: 12px;
+            font-size: 14px;
+            transition: all 0.2s ease;
         }
 
-        .btn-copy-pass {
-            background: transparent;
-            border: none;
+        .social-btn:hover {
+            border-color: var(--accent-blue);
+            background: #111827;
+            transform: translateY(-2px);
+        }
+
+        .social-btn .left-side {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .social-btn i {
+            font-size: 18px;
             color: var(--accent-blue);
-            cursor: pointer;
-            font-size: 12px;
         }
 
-        .hidden { display: none !important; }
+        .social-btn .fa-telegram { color: #229ED9; }
+        .social-btn .fa-instagram { color: #E4405F; }
+        .social-btn .fa-facebook { color: #1877F2; }
+
+        .footer-note {
+            margin-top: 24px;
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="profile-container">
+        <div class="avatar-box">
+            <i class="fa-solid fa-user-tie"></i>
+        </div>
         
-        <!-- شاشة تسجيل الدخول الشخصية -->
-        <div id="loginSection" class="login-box">
-            <div class="system-icon"><i class="fa-solid fa-user-shield"></i></div>
-            <h2>حاتم الأحلصي</h2>
-            <p class="subtitle">نظام إدارة الحسابات الشخصية السحابي</p>
-            
-            <div class="form-group">
-                <label>اسم المستخدم</label>
-                <input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم">
-            </div>
-            <div class="form-group">
-                <label>كلمة المرور</label>
-                <input type="password" id="loginPassword" placeholder="••••••••">
-            </div>
-            
-            <button class="btn btn-primary" onclick="login()" style="margin-top: 6px;">
-                <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
-            </button>
+        <h1>حاتم الأحلصي</h1>
+        <p class="bio-text">مهندس شبكات ونظم تقنية، أطور حلول الويب وتطبيقات الإدارة السحابية. مرحباً بك في صفحتي الشخصية الرسمية.</p>
+
+        <div class="social-links">
+            <!-- رابط التليجرام -->
+            <a href="https://t.me/hatemalahlasi" target="_blank" class="social-btn">
+                <div class="left-side">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>تليجرام</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 11px; color: var(--text-muted);"></i>
+            </a>
+
+            <!-- رابط الانستقرام -->
+            <a href="https://instagram.com" target="_blank" class="social-btn">
+                <div class="left-side">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>انستقرام</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 11px; color: var(--text-muted);"></i>
+            </a>
+
+            <!-- رابط الفيسبوك -->
+            <a href="https://facebook.com" target="_blank" class="social-btn">
+                <div class="left-side">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>فيسبوك</span>
+                </div>
+                <i class="fa-solid fa-chevron-left" style="font-size: 11px; color: var(--text-muted);"></i>
+            </a>
         </div>
 
-        <!-- لوحة التحكم الشخصية (حاتم) -->
-        <div id="userDashboard" class="hidden">
-            <div class="top-bar">
-                <div>
-                    <span class="admin-badge"><i class="fa-solid fa-user-check"></i> لوحة التحكم الشخصية</span>
-                    <h3 style="margin-top: 3px; font-size: 17px;" id="welcomeUserTitle">أهلاً بك، حاتم</h3>
-                </div>
-                <div class="top-bar-actions">
-                    <button class="btn btn-outline btn-sm" onclick="refreshUserDataManual()">
-                        <i class="fa-solid fa-rotate"></i> تحديث
-                    </button>
-                    <button class="btn btn-outline btn-sm" onclick="changeMyPassword()">
-                        <i class="fa-solid fa-key"></i> الباسورد
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="logout()">
-                        <i class="fa-solid fa-right-from-bracket"></i> خروج
-                    </button>
-                </div>
-            </div>
-
-            <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة حساب أو تطبيق جديد (فيس بوك، انستقرام...)</div>
-                <div class="grid-2">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>اسم التطبيق أو الحساب</label>
-                        <input type="text" id="appName" placeholder="مثال: انستقرام - فيسبوك">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>كلمة السر</label>
-                        <input type="text" id="appPass" placeholder="كلمة السر">
-                    </div>
-                </div>
-                <button class="btn btn-primary" onclick="addUserEntry()" style="margin-top: 10px;">
-                    <i class="fa-solid fa-floppy-disk"></i> حفظ في السحابة
-                </button>
-            </div>
-
-            <h4 style="font-size: 13.5px; margin-bottom: 6px;">حساباتك الشخصية المسجلة:</h4>
-            <div class="table-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>التطبيق</th>
-                            <th>كلمة السر</th>
-                            <th>التاريخ</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userEntriesTable"></tbody>
-                </table>
-            </div>
+        <div class="footer-note">
+            جميع الحقوق محفوظة © 2026 حاتم الأحلصي
         </div>
-
     </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyD3dZmGf-HiIleBURpFj-kpssabUuOpRD4",
-            authDomain: "familyvault-8246c.firebaseapp.com",
-            projectId: "familyvault-8246c",
-            storageBucket: "familyvault-8246c.firebasestorage.app",
-            messagingSenderId: "175087357500",
-            appId: "1:175087357500:web:05c7cbc434c86b2c04fd39",
-            measurementId: "G-XN5SPDD0SX"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        const OWNER_USER = "hatem"; // اسم المستخدم الخاص بك
-        let currentMemberDocId = null;
-        let autoSyncInterval = null;
-
-        function toggleView(viewId) {
-            ['loginSection', 'userDashboard'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-            document.getElementById(viewId).classList.remove('hidden');
-        }
-
-        async function login() {
-            const u = document.getElementById('loginUsername').value.trim();
-            const p = document.getElementById('loginPassword').value.trim();
-
-            if (!u || !p) {
-                alert('يرجى إدخال اسم المستخدم وكلمة المرور');
-                return;
-            }
-
-            // البحث عن حسابك في قاعدة البيانات
-            const snapshot = await db.collection('members').where('username', '==', u).where('password', '==', p).get();
-            if (!snapshot.empty) {
-                const doc = snapshot.docs[0];
-                currentMemberDocId = doc.id;
-                document.getElementById('loginUsername').value = '';
-                document.getElementById('loginPassword').value = '';
-                document.getElementById('welcomeUserTitle').innerText = `أهلاً بك، ${u}`;
-                renderUserEntries(doc.data().entries || []);
-                toggleView('userDashboard');
-                startAutoSync();
-            } else {
-                alert('خطأ في اسم المستخدم أو كلمة المرور!');
-            }
-        }
-
-        function startAutoSync() {
-            if (autoSyncInterval) clearInterval(autoSyncInterval);
-            autoSyncInterval = setInterval(async () => {
-                if (currentMemberDocId) {
-                    const doc = await db.collection('members').doc(currentMemberDocId).get();
-                    if (doc.exists) {
-                        renderUserEntries(doc.data().entries || []);
-                    }
-                }
-            }, 5000);
-        }
-
-        async function refreshUserDataManual() {
-            if (!currentMemberDocId) return;
-            const doc = await db.collection('members').doc(currentMemberDocId).get();
-            if (doc.exists) {
-                renderUserEntries(doc.data().entries || []);
-            }
-        }
-
-        async function changeMyPassword() {
-            const currentPass = prompt('أدخل كلمة المرور الحالية لحسابك:');
-            if (currentPass === null) return;
-            
-            const memberRef = db.collection('members').doc(currentMemberDocId);
-            const doc = await memberRef.get();
-            if (!doc.exists) return;
-
-            if (doc.data().password !== currentPass) {
-                alert('كلمة المرور الحالية غير صحيحة!');
-                return;
-            }
-
-            const newPass = prompt('أدخل كلمة المرور الجديدة:');
-            if (!newPass || !newPass.trim()) return;
-
-            await memberRef.update({ password: newPass.trim() });
-            alert('تم تغيير كلمة المرور وحفظها في السحابة بنجاح!');
-        }
-
-        async function addUserEntry() {
-            const app = document.getElementById('appName').value.trim();
-            const pass = document.getElementById('appPass').value.trim();
-
-            if (!app || !pass) {
-                alert('يرجى تعبئة حقل اسم التطبيق وكلمة السر');
-                return;
-            }
-
-            const now = new Date();
-            const date = now.toISOString().split('T')[0];
-
-            const memberRef = db.collection('members').doc(currentMemberDocId);
-            const doc = await memberRef.get();
-            let entries = doc.data().entries || [];
-            entries.push({ app, pass, date });
-
-            await memberRef.update({ entries });
-            document.getElementById('appName').value = '';
-            document.getElementById('appPass').value = '';
-            renderUserEntries(entries);
-        }
-
-        function renderUserEntries(entries) {
-            const tbody = document.getElementById('userEntriesTable');
-            tbody.innerHTML = '';
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">لا توجد حسابات محفوظة.</td></tr>';
-                return;
-            }
-            entries.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${item.app}</strong></td>
-                        <td>
-                            <div class="pass-container">
-                                <span class="pass-badge">${item.pass}</span>
-                                <button class="btn-copy-pass" onclick="copyPassword('${item.pass}')"><i class="fa-solid fa-copy"></i></button>
-                            </div>
-                        </td>
-                        <td>${item.date}</td>
-                        <td>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="btn btn-warning btn-sm" onclick="editUserEntry(${index})" title="تعديل"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteUserEntry(${index})" title="حذف"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function editUserEntry(index) {
-            const memberRef = db.collection('members').doc(currentMemberDocId);
-            const doc = await memberRef.get();
-            let entries = doc.data().entries || [];
-            const item = entries[index];
-
-            const newPass = prompt(`تعديل كلمة السر لـ (${item.app}):`, item.pass);
-            if (newPass === null) return;
-
-            if (!newPass.trim()) {
-                alert('لا يمكن أن تكون كلمة السر فارغة!');
-                return;
-            }
-
-            const now = new Date();
-            entries[index].pass = newPass.trim();
-            entries[index].date = now.toISOString().split('T')[0];
-
-            await memberRef.update({ entries });
-            renderUserEntries(entries);
-        }
-
-        async function deleteUserEntry(index) {
-            if (!confirm('حذف هذا الحساب؟')) return;
-            const memberRef = db.collection('members').doc(currentMemberDocId);
-            const doc = await memberRef.get();
-            let entries = doc.data().entries || [];
-            entries.splice(index, 1);
-            await memberRef.update({ entries });
-            renderUserEntries(entries);
-        }
-
-        function copyPassword(text) {
-            navigator.clipboard.writeText(text);
-            alert('تم نسخ كلمة المرور!');
-        }
-
-        function logout() {
-            if (autoSyncInterval) clearInterval(autoSyncInterval);
-            currentMemberDocId = null;
-            toggleView('loginSection');
-        }
-    </script>
 </body>
 </html>
