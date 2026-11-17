@@ -228,7 +228,7 @@
             font-size: 12px;
         }
 
-        /* بطاقة المستخدم القابلة للنقر */
+        /* بطاقة المستخدم المرتبطة في لوحة المشرف */
         .member-card {
             background: #ffffff;
             border: 1.5px solid var(--border-color);
@@ -278,7 +278,7 @@
             border-radius: 12px;
         }
 
-        /* النافذة المنبثقة (Modal) لعرض كافة بيانات المستخدم */
+        /* نافذة منبثقة (Modal) تعرض بيانات الشخص فقط عند الضغط عليه */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -301,12 +301,6 @@
             overflow-y: auto;
             padding: 18px;
             box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.2);
-            animation: popIn 0.2s ease-out;
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
@@ -379,7 +373,7 @@
             </div>
 
             <div class="panel-card">
-                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد (تاريخ رسمي تلقائي)</div>
+                <div class="panel-title"><i class="fa-solid fa-circle-plus"></i> إضافة تطبيق أو حساب جديد</div>
                 <div class="grid-2">
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>اسم التطبيق</label>
@@ -448,19 +442,19 @@
                 </button>
             </div>
 
-            <h4 style="font-size: 14px; margin-bottom: 8px;">أفراد العائلة (<span id="membersCount">0</span>) - اضغط على المستخدم لعرض جميع بياناته:</h4>
+            <h4 style="font-size: 14px; margin-bottom: 8px;">أفراد العائلة (<span id="membersCount">0</span>) - اضغط على اسم الشخص لعرض بياناته الخاصة:</h4>
             <div id="adminAllDataContainer"></div>
         </div>
 
     </div>
 
-    <!-- النافذة المنبثقة لعرض جميع بيانات المستخدم المحدد -->
+    <!-- نافذة منبثقة تعرض بيانات الشخص المحدد فقط عند النقر -->
     <div id="memberDetailsModal" class="modal-overlay hidden" onclick="closeMemberModal(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-address-card" style="color: var(--primary-blue); font-size: 20px;"></i>
-                    <h3 id="modalMemberName" style="font-size: 17px; font-weight: 800;">بيانات المستخدم</h3>
+                    <i class="fa-solid fa-user-shield" style="color: var(--primary-blue); font-size: 20px;"></i>
+                    <h3 id="modalMemberName" style="font-size: 17px; font-weight: 800;">بيانات الحساب</h3>
                 </div>
                 <button class="btn btn-danger btn-sm" onclick="closeMemberModal()">
                     <i class="fa-solid fa-xmark"></i> إغلاق
@@ -489,8 +483,8 @@
         let currentUser = null;
         let currentMemberDocId = null;
         let autoSyncInterval = null;
-        let membersCache = {}; // تخزين بيانات الأعضاء للوصول الفوري عند النقر
-        let activeModalMemberId = null; // تتبع المستخدم المفتوح في النافذة المنبثقة
+        let membersCache = {}; 
+        let activeModalMemberId = null; 
 
         function toggleView(viewId) {
             ['loginSection', 'userDashboard', 'adminDashboard'].forEach(id => {
@@ -708,7 +702,7 @@
             renderAdminView();
         }
 
-        // عرض قائمة أفراد العائلة كبطاقات نظيفة قابلة للضغط
+        // عرض أسماء المستخدمين فقط في لوحة المشرف بشكل مرتب ونظيف
         async function renderAdminView() {
             const snapshot = await db.collection('members').get();
             document.getElementById('membersCount').innerText = snapshot.size;
@@ -734,11 +728,11 @@
                             <div class="member-avatar">${firstLetter}</div>
                             <div>
                                 <strong style="color: var(--text-dark); font-size: 15px; display: block;">${member.username}</strong>
-                                <span style="font-size: 11.5px; color: var(--text-muted);">اضغط لعرض جميع البيانات (${appCount} تطبيق)</span>
+                                <span style="font-size: 11.5px; color: var(--text-muted);">اضغط لعرض كافة بيانات وكلمات سر الشخص (${appCount} تطبيق)</span>
                             </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 6px;">
-                            <span class="count-pill"><i class="fa-solid fa-eye"></i> عرض</span>
+                            <span class="count-pill"><i class="fa-solid fa-folder-open"></i> استعراض</span>
                             <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); adminDeleteMember('${mId}')" title="حذف الفرد">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
@@ -748,16 +742,17 @@
             });
         }
 
-        // فتح النافذة المنبثقة وعرض كافة بيانات المستخدم
+        // فتح النافذة المنبثقة الخاصة بالشخص عند الضغط عليه
         function openMemberModal(mId) {
             const member = membersCache[mId];
             if (!member) return;
             activeModalMemberId = mId;
-            document.getElementById('modalMemberName').innerText = `بيانات: ${member.username}`;
+            document.getElementById('modalMemberName').innerText = `بيانات الحساب: ${member.username}`;
             renderMemberModalBody(mId);
             document.getElementById('memberDetailsModal').classList.remove('hidden');
         }
 
+        // عرض محتوى النافذة المنبثقة (كلمات السر، التطبيقات، وإمكانية تعديلها)
         function renderMemberModalBody(mId) {
             const member = membersCache[mId];
             if (!member) return;
@@ -776,7 +771,7 @@
                                     <th>التطبيق</th>
                                     <th>كلمة السر</th>
                                     <th>التاريخ</th>
-                                    <th>إجراءات</th>
+                                    <th>إجراءات المشرف</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -807,7 +802,7 @@
             contentDiv.innerHTML = `
                 <div class="modal-user-meta">
                     <div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
-                        <span style="font-weight: 700;">باسورد الدخول للحساب:</span>
+                        <span style="font-weight: 700;">باسورد دخول الحساب:</span>
                         <span class="pass-badge">${member.password}</span>
                         <button class="btn-copy-pass" onclick="copyPassword('${member.password}')"><i class="fa-solid fa-copy"></i></button>
                     </div>
