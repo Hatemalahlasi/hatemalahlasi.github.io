@@ -75,7 +75,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* إطار الصورة الشخصية */
         .avatar-wrapper {
             position: relative;
             width: 112px;
@@ -168,6 +167,7 @@
             transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .social-btn:hover, .social-btn:active {
@@ -230,7 +230,6 @@
             color: var(--text-light);
         }
 
-        /* ألوان كل منصة */
         .btn-telegram { --btn-color: #229ED9; --btn-glow: rgba(34, 158, 217, 0.35); }
         .btn-telegram .icon-box { color: #229ED9; background: rgba(34, 158, 217, 0.12); }
 
@@ -246,7 +245,6 @@
         .btn-snapchat { --btn-color: #FFFC00; --btn-glow: rgba(255, 252, 0, 0.25); }
         .btn-snapchat .icon-box { color: #FFFC00; background: rgba(255, 252, 0, 0.12); }
 
-        /* زر مشاركة الرابط */
         .share-btn {
             margin-top: 20px;
             width: 100%;
@@ -282,7 +280,6 @@
 <body>
 
     <div class="profile-container">
-        <!-- الصورة الشخصية -->
         <div class="avatar-wrapper">
             <img src="avatar.jpg" alt="حاتم الاحلسي" class="avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=حاتم+الاحلسي&background=0284c7&color=fff&size=200&font-size=0.38'">
             <span class="status-dot" title="متاح للتواصل"></span>
@@ -298,7 +295,11 @@
 
         <div class="social-links">
             <!-- تليجرام -->
-            <a href="https://t.me/hatemalahlasi" target="_blank" rel="noopener noreferrer" class="social-btn btn-telegram">
+            <a href="https://t.me/hatemalahlasi"
+               data-app="tg://resolve?domain=hatemalahlasi"
+               data-web="https://t.me/hatemalahlasi"
+               onclick="return openSmartApp(event, this)"
+               target="_blank" rel="noopener noreferrer" class="social-btn btn-telegram">
                 <div class="right-side">
                     <div class="icon-box"><i class="fa-brands fa-telegram"></i></div>
                     <div class="link-info">
@@ -310,7 +311,11 @@
             </a>
 
             <!-- انستقرام -->
-            <a href="https://www.instagram.com/hatem.ym?srtk=MTlnbWpmd3AwNW12Mg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-btn btn-instagram">
+            <a href="https://www.instagram.com/hatem.ym?srtk=MTlnbWpmd3AwNW12Mg%3D%3D&utm_source=qr"
+               data-app="instagram://user?username=hatem.ym"
+               data-web="https://www.instagram.com/hatem.ym?srtk=MTlnbWpmd3AwNW12Mg%3D%3D&utm_source=qr"
+               onclick="return openSmartApp(event, this)"
+               target="_blank" rel="noopener noreferrer" class="social-btn btn-instagram">
                 <div class="right-side">
                     <div class="icon-box"><i class="fa-brands fa-instagram"></i></div>
                     <div class="link-info">
@@ -322,7 +327,9 @@
             </a>
 
             <!-- فيسبوك -->
-            <a href="https://www.facebook.com/share/1GwQNm6TV1/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-btn btn-facebook">
+            <a href="https://www.facebook.com/share/1GwQNm6TV1/?mibextid=wwXIfr"
+               data-web="https://www.facebook.com/share/1GwQNm6TV1/?mibextid=wwXIfr"
+               target="_blank" rel="noopener noreferrer" class="social-btn btn-facebook">
                 <div class="right-side">
                     <div class="icon-box"><i class="fa-brands fa-facebook-f"></i></div>
                     <div class="link-info">
@@ -334,7 +341,9 @@
             </a>
 
             <!-- تيك توك -->
-            <a href="https://www.tiktok.com/@hatem.ym" target="_blank" rel="noopener noreferrer" class="social-btn btn-tiktok">
+            <a href="https://www.tiktok.com/@hatem.ym"
+               data-web="https://www.tiktok.com/@hatem.ym"
+               target="_blank" rel="noopener noreferrer" class="social-btn btn-tiktok">
                 <div class="right-side">
                     <div class="icon-box"><i class="fa-brands fa-tiktok"></i></div>
                     <div class="link-info">
@@ -346,7 +355,9 @@
             </a>
 
             <!-- سناب شات -->
-            <a href="https://snapchat.com/t/EagwKRp9" target="_blank" rel="noopener noreferrer" class="social-btn btn-snapchat">
+            <a href="https://snapchat.com/t/EagwKRp9"
+               data-web="https://snapchat.com/t/EagwKRp9"
+               target="_blank" rel="noopener noreferrer" class="social-btn btn-snapchat">
                 <div class="right-side">
                     <div class="icon-box"><i class="fa-brands fa-snapchat"></i></div>
                     <div class="link-info">
@@ -358,7 +369,6 @@
             </a>
         </div>
 
-        <!-- زر نسخ/مشاركة الصفحة -->
         <button class="share-btn" onclick="shareProfile()" id="shareBtn">
             <i class="fa-solid fa-share-nodes"></i>
             <span>مشاركة رابط الصفحة</span>
@@ -370,6 +380,31 @@
     </div>
 
     <script>
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        }
+
+        function openSmartApp(event, element) {
+            const appUrl = element.getAttribute('data-app');
+            const webUrl = element.getAttribute('data-web') || element.href;
+
+            if (!isMobileDevice() || !appUrl) {
+                return true;
+            }
+
+            event.preventDefault();
+            const start = Date.now();
+            window.location.href = appUrl;
+
+            setTimeout(() => {
+                if (Date.now() - start < 1800 && !document.hidden) {
+                    window.open(webUrl, '_blank', 'noopener,noreferrer');
+                }
+            }, 1100);
+
+            return false;
+        }
+
         function shareProfile() {
             const shareData = {
                 title: 'حاتم الاحلسي | الملف الشخصي',
